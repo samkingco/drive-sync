@@ -111,7 +111,7 @@ async function findAvailableOperations(): Promise<SyncOperation[]> {
 
 	for (const config of SYNC_CONFIGS) {
 		if (config.pattern) {
-			const matches = volumes.filter(config.pattern?.test);
+			const matches = volumes.filter((v) => config.pattern?.test(v));
 			for (const drive of matches) {
 				const drivePath = join("/Volumes", drive);
 				const spaceAvailable = await getDriveAvailableSpace(drivePath);
