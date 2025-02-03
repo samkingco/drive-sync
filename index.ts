@@ -117,7 +117,7 @@ async function findAvailableOperations(): Promise<SyncOperation[]> {
 				const spaceAvailable = await getDriveAvailableSpace(drivePath);
 				const formattedSpace = await formatSize(spaceAvailable);
 				operations.push({
-					name: `${config.name} (${drive} - ${formattedSpace} free)`,
+					name: `${drive} (${formattedSpace} free)`,
 					config,
 					source: drivePath,
 				});
@@ -210,11 +210,14 @@ async function main() {
 		}
 
 		const selectedOperation = await select({
-			message: "Select sync operation:",
+			message: "Select drive to sync",
 			choices: operations.map((op) => ({
-				name: `${op.name} - ${op.config.description}`,
+				name: `${op.name}`,
 				value: op,
 			})),
+			theme: {
+				helpMode: "never",
+			},
 		});
 
 		console.log(`\nStarting ${selectedOperation.name}`);
