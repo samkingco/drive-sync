@@ -1,0 +1,8 @@
+logs
+_.log
+npm-debug.log_
+.pnpm-debug.log*
+node_modules/
+dist
+.temp
+.DS_Store
