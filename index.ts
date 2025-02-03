@@ -134,9 +134,7 @@ async function findAvailableOperations(): Promise<SyncOperation[]> {
 					source: source.path,
 				});
 				break;
-			} catch {
-				console.log(`Directory not found: ${source.path}`);
-			}
+			} catch {}
 		}
 	}
 
