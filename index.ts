@@ -12,11 +12,13 @@ type SyncConfig = {
   sources: Array<{
     path: string;
     dest: string;
+    rsyncFlags?: readonly string[];
   }>;
   rsyncFlags: readonly string[];
 };
 
 const PATHS = {
+  code: "/Users/sk/Code",
   movies: "/Users/sk/Movies",
   footage: "/Users/sk/Movies/Footage",
   audio: "/Users/sk/Movies/Audio",
@@ -29,6 +31,15 @@ const RSYNC_FLAGS = {
 } as const;
 
 const backupSources: SyncConfig["sources"] = [
+  {
+    path: `${PATHS.code}/`,
+    dest: "Code",
+    rsyncFlags: [
+      "--exclude=node_modules/",
+      "--exclude=.build/",
+      "--exclude=DerivedData/",
+    ],
+  },
   {
     path: `${PATHS.movies}/`,
     dest: "Video",
@@ -146,7 +157,7 @@ async function findAvailableOperations(): Promise<SyncOperation[]> {
 }
 
 async function performSync(operation: SyncOperation) {
-  for (const { path, dest } of operation.config.sources) {
+  for (const { path, dest, rsyncFlags = [] } of operation.config.sources) {
     try {
       console.log(`\nSyncing ${path} to ${dest}`);
 
@@ -155,6 +166,7 @@ async function performSync(operation: SyncOperation) {
       const command = [
         "rsync",
         ...operation.config.rsyncFlags,
+        ...rsyncFlags,
         path,
         `${destPath}/`,
       ];
