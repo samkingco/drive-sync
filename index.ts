@@ -42,6 +42,10 @@ const backupSources: SyncConfig["sources"] = [
     dest: "Photography/2025",
   },
   {
+    path: `${PATHS.photography}/2026/`,
+    dest: "Photography/2026",
+  },
+  {
     path: `${PATHS.photography}/Capture One/`,
     dest: "Photography/Capture One",
   },
