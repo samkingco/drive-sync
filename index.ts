@@ -19,9 +19,9 @@ type SyncConfig = {
 
 const PATHS = {
   code: "/Users/sk/Code",
-  movies: "/Users/sk/Movies",
-  footage: "/Users/sk/Movies/Footage",
-  audio: "/Users/sk/Movies/Audio",
+  movies: "/Users/sk/Dropbox/movies",
+  footage: "/Users/sk/Dropbox/movies/Footage",
+  audio: "/Users/sk/Dropbox/movies/Audio",
   photography: "/Users/sk/Dropbox/photography",
 } as const;
 
