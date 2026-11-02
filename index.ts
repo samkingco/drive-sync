@@ -44,6 +44,10 @@ const backupSources: SyncConfig["sources"] = [
     path: `${PATHS.movies}/`,
     dest: "Video",
   },
+];
+
+const hotBackupSources: SyncConfig["sources"] = [
+  ...backupSources,
   {
     path: `${PATHS.photography}/2024/`,
     dest: "Photography/2024",
@@ -62,19 +66,33 @@ const backupSources: SyncConfig["sources"] = [
   },
 ];
 
+const archiveBackupSources: SyncConfig["sources"] = [
+  ...backupSources,
+  {
+    path: `${PATHS.photography}/`,
+    dest: "Photography",
+    rsyncFlags: [
+      "--include=/202[2-9]/",
+      "--include=/20[3-9][0-9]/",
+      "--include=/Capture One/",
+      "--exclude=/*",
+    ],
+  },
+];
+
 const SYNC_CONFIGS: SyncConfig[] = [
   {
     name: "Hot Backup",
     description: "Mirror backup of all media files",
     pattern: /^HOT_/,
-    sources: backupSources,
+    sources: hotBackupSources,
     rsyncFlags: RSYNC_FLAGS.mirror,
   },
   {
     name: "Archive Backup",
     description: "Append-only backup of all media files",
     pattern: /^ARCHIVE_/,
-    sources: backupSources,
+    sources: archiveBackupSources,
     rsyncFlags: RSYNC_FLAGS.copyNew,
   },
   {
